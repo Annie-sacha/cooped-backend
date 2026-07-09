@@ -17,6 +17,7 @@ public class CoopedDbContext : DbContext
     public DbSet<Pret> Prets => Set<Pret>();
     public DbSet<Frais> FraisList => Set<Frais>();
     public DbSet<Achat> Achats => Set<Achat>();
+    public DbSet<Penalite> Penalites => Set<Penalite>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
