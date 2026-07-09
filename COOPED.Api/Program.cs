@@ -2,6 +2,7 @@ using COOPED.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using COOPED.Application.Interfaces;
 using COOPED.Infrastructure.Services;
+using COOPED.Infrastructure.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,6 +15,9 @@ builder.Services.AddDbContext<CoopedDbContext>(options =>
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddScoped<IClientRepository, ClientRepository>();
+builder.Services.AddScoped<ITontineRepository, TontineRepository>();
 
 
 builder.Services.AddScoped<ISuiviService, SuiviService>();
@@ -30,3 +34,7 @@ app.UseHttpsRedirection();  // force à utiliser https
 app.UseAuthorization();   //Active le système d'autorisation.
 app.MapControllers();  //Utilise les routes définies dans mes contrôleurs.
 app.Run(); // lance l'api
+
+
+
+
