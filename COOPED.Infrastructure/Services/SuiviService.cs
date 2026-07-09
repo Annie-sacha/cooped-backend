@@ -1,18 +1,16 @@
 using COOPED.Application.DTOs.Client;
 using COOPED.Application.Interfaces;
 using COOPED.Domain.Entities;
+using COOPED.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 
-namespace COOPED.Application.Services;
+namespace COOPED.Infrastructure.Services;
 
 public class SuiviService : ISuiviService
 {
+    private readonly CoopedDbContext _context;
 
-    private readonly DbContext _context;
-    // Remplace DbContext par CoopedDbContext une fois Infrastructure référencé,
-    // ou injecte via interface de repository si tu préfères ne pas dépendre d'EF ici.
-
-    public SuiviService(DbContext context)
+    public SuiviService(CoopedDbContext context)
     {
         _context = context;
     }
@@ -20,7 +18,7 @@ public class SuiviService : ISuiviService
     public async Task<List<LigneSuiviDto>> GenererSuiviAsync(int clientId)
     {
         // 1. Cotisations des tontines NORMALES uniquement (entrées)
-        var cotisations = await _context.Set<Cotisation>()
+        var cotisations = await _context.Cotisations
             .Include(c => c.Tontine)
             .Where(c => c.ClientId == clientId
                         && c.Tontine != null
@@ -35,19 +33,19 @@ public class SuiviService : ISuiviService
             .ToListAsync();
 
         // 2. Retraits (sorties)
-        var retraits = await _context.Set<Retrait>()
+        var retraits = await _context.Retraits
             .Where(r => r.ClientId == clientId)
             .Select(r => new LigneSuiviDto
             {
                 Date = r.Date,
-                Designation = $"Retrait" + (r.Motif != null ? $" ({r.Motif})" : ""),
+                Designation = "Retrait" + (r.Motif != null ? $" ({r.Motif})" : ""),
                 Entree = 0,
                 Sortie = r.MontantTotal
             })
             .ToListAsync();
 
-        // 3. Achats (sorties) — seul le résultat final, pas les cotisations de la tontine achat
-        var achats = await _context.Set<Achat>()
+        // 3. Achats (sorties)
+        var achats = await _context.Achats
             .Where(a => a.ClientId == clientId)
             .Select(a => new LigneSuiviDto
             {

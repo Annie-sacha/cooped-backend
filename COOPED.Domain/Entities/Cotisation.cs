@@ -1,3 +1,5 @@
+namespace COOPED.Domain.Entities;
+
 public class Cotisation : Transaction
 {
     public int NbreMise { get; set; }

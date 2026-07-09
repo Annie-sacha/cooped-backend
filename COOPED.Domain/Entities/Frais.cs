@@ -1,3 +1,5 @@
+namespace COOPED.Domain.Entities;
+
 public class Frais : Transaction
 {
     public string Type { get; set; } = string.Empty;

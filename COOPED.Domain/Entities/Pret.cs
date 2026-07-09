@@ -1,3 +1,5 @@
+namespace COOPED.Domain.Entities;
+
 public enum TypePret { Mensuel, Quinzaine }
 
 public class Pret : Transaction

@@ -1,3 +1,5 @@
+namespace COOPED.Domain.Entities;
+
 public class Achat : Transaction
 {
     public string Article { get; set; } = string.Empty;
