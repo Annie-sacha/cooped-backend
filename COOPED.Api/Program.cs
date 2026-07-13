@@ -26,6 +26,7 @@ builder.Services.AddScoped<ITontineRepository, TontineRepository>();
 // Enregistrement générique pour toutes les entités (couvre Pret, Frais, etc.)
 builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 builder.Services.AddScoped<IPretService, PretService>();
+builder.Services.AddScoped<IPenaliteService, PenaliteService>();
 
 
 builder.Services.AddScoped<ISuiviService, SuiviService>();
