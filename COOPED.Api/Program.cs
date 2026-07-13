@@ -4,6 +4,10 @@ using COOPED.Application.Interfaces;
 using COOPED.Infrastructure.Services;
 using COOPED.Infrastructure.Repositories;
 
+
+
+
+
 var builder = WebApplication.CreateBuilder(args);
 
 var connectionString = builder.Configuration.GetConnectionString("CoopedDb");   // connexion à la base de cooped
@@ -18,6 +22,10 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped<IClientRepository, ClientRepository>();
 builder.Services.AddScoped<ITontineRepository, TontineRepository>();
+
+// Enregistrement générique pour toutes les entités (couvre Pret, Frais, etc.)
+builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+builder.Services.AddScoped<IPretService, PretService>();
 
 
 builder.Services.AddScoped<ISuiviService, SuiviService>();
