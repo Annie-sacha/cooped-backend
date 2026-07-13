@@ -1,5 +1,6 @@
 using COOPED.Application.DTOs.Pret;
 using COOPED.Domain.Entities;
+using COOPED.Domain.Enums;
 
 namespace COOPED.Application.Interfaces;
 

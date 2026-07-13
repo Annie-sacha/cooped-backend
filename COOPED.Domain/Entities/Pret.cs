@@ -2,14 +2,15 @@ using COOPED.Domain.Enums;
 
 namespace COOPED.Domain.Entities;
 
-public enum TypePret { Mensuel, Quinzaine }
-
 public class Pret : Transaction
 {
     public TypePret Type { get; set; }
-    public int DureeRemboursement { get; set; }     // 15 ou 30 jours (durée initiale)
-    public DateOnly DateEcheance { get; set; }       // échéance courante, repoussée à chaque pénalité
+    public int DureeRemboursement { get; set; }
+    public DateOnly DateEcheance { get; set; }
     public StatutPret Statut { get; set; } = StatutPret.EnCours;
+
+    public DateOnly? DateDemande { get; set; }
+    public StatutValidation StatutValidation { get; set; } = StatutValidation.Valide;
 
     public int? TontineId { get; set; }
     public Tontine? Tontine { get; set; }
