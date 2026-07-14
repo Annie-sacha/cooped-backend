@@ -28,8 +28,8 @@ builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepositor
 builder.Services.AddScoped<IPretService, PretService>();
 builder.Services.AddScoped<IPenaliteService, PenaliteService>();
 
-
 builder.Services.AddScoped<ISuiviService, SuiviService>();
+builder.Services.AddScoped<ITontineService, TontineService>();
 
 var app = builder.Build();     // constructeur de l'application 
 
