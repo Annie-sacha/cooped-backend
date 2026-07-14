@@ -30,6 +30,7 @@ builder.Services.AddScoped<IPenaliteService, PenaliteService>();
 
 builder.Services.AddScoped<ISuiviService, SuiviService>();
 builder.Services.AddScoped<ITontineService, TontineService>();
+builder.Services.AddScoped<IClientService, ClientService>();
 
 var app = builder.Build();     // constructeur de l'application 
 
