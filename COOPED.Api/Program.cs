@@ -32,6 +32,10 @@ builder.Services.AddScoped<ISuiviService, SuiviService>();
 builder.Services.AddScoped<ITontineService, TontineService>();
 builder.Services.AddScoped<IClientService, ClientService>();
 
+builder.Services.AddScoped<IPromoteurService, PromoteurService>();
+builder.Services.AddScoped<IRetraitService, RetraitService>();
+builder.Services.AddScoped<IAchatService, AchatService>();
+
 var app = builder.Build();     // constructeur de l'application 
 
 if (app.Environment.IsDevelopment())
