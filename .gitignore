@@ -482,3 +482,5 @@ $RECYCLE.BIN/
 
 # Vim temporary swap files
 *.swp
+COOPED.MigrationTool/appsettings.json
+COOPED.Api/appsettings.Development.json
