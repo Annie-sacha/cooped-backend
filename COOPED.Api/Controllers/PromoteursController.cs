@@ -1,11 +1,13 @@
 using COOPED.Application.DTOs.Promoteur;
 using COOPED.Application.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace COOPED.Api.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
+[Authorize]   // niveau classe : il faut être connecté (admin OU promoteur) pour tout le reste
 public class PromoteursController : ControllerBase
 {
     private readonly IPromoteurService _promoteurService;
@@ -17,6 +19,7 @@ public class PromoteursController : ControllerBase
         _clientService = clientService;
     }
 
+    [Authorize(Roles = "Administrateur")]   // seul l'admin peut créer un promoteur
     [HttpPost]
     public async Task<IActionResult> Creer([FromBody] CreatePromoteurDto dto)
     {
@@ -43,6 +46,7 @@ public class PromoteursController : ControllerBase
         return Ok(await _clientService.ObtenirParPromoteurAsync(id));
     }
 
+    [Authorize(Roles = "Administrateur")]   // ← seul l'admin peut modifier
     [HttpPut("{id}")]
     public async Task<IActionResult> Modifier(int id, [FromBody] UpdatePromoteurDto dto)
     {
@@ -50,6 +54,7 @@ public class PromoteursController : ControllerBase
         return succes ? NoContent() : NotFound();
     }
 
+    [Authorize(Roles = "Administrateur")]   // ← seul l'admin peut supprimer
     [HttpDelete("{id}")]
     public async Task<IActionResult> Supprimer(int id)
     {

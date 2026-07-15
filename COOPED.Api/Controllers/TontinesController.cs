@@ -1,11 +1,13 @@
 using COOPED.Application.DTOs.Tontine;
 using COOPED.Application.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
 namespace COOPED.Api.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
+[Authorize]    // exige un token JWT valide
 public class TontinesController : ControllerBase
 {
     private readonly ITontineService _tontineService;

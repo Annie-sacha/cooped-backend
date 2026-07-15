@@ -1,11 +1,13 @@
 using COOPED.Application.DTOs.Achat;
 using COOPED.Application.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
 namespace COOPED.Api.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
+[Authorize]   // exige un token JWT valide
 public class AchatsController : ControllerBase
 {
     private readonly IAchatService _achatService;

@@ -1,11 +1,13 @@
 using COOPED.Application.DTOs.Retrait;
 using COOPED.Application.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
 namespace COOPED.Api.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
+[Authorize]  // exige un token JWT valide
 public class RetraitsController : ControllerBase
 {
     private readonly IRetraitService _retraitService;

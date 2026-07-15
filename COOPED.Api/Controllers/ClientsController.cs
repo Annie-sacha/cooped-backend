@@ -1,11 +1,14 @@
 using COOPED.Application.DTOs.Client;
 using COOPED.Application.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
+
 
 namespace COOPED.Api.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
+[Authorize]  // exige un token JWT valide
 public class ClientsController : ControllerBase
 {
     private readonly IClientService _clientService;
@@ -17,6 +20,7 @@ public class ClientsController : ControllerBase
         _suiviService = suiviService;
     }
 
+    [Authorize(Roles = "Administrateur")]
     [HttpPost]
     public async Task<IActionResult> Creer([FromBody] CreateClientDto dto)
     {
@@ -49,6 +53,7 @@ public class ClientsController : ControllerBase
         return Ok(await _suiviService.GenererSuiviAsync(id));
     }
 
+    [Authorize(Roles = "Administrateur")]
     [HttpPut("{id}")]
     public async Task<IActionResult> Modifier(int id, [FromBody] UpdateClientDto dto)
     {
@@ -56,6 +61,7 @@ public class ClientsController : ControllerBase
         return succes ? NoContent() : NotFound();
     }
 
+    [Authorize(Roles = "Administrateur")]
     [HttpDelete("{id}")]
     public async Task<IActionResult> Supprimer(int id)
     {

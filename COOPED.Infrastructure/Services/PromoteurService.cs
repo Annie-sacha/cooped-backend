@@ -7,10 +7,12 @@ namespace COOPED.Infrastructure.Services;
 public class PromoteurService : IPromoteurService
 {
     private readonly IGenericRepository<Promoteur> _promoteurRepository;
+    private readonly IAuthService _authService;
 
-    public PromoteurService(IGenericRepository<Promoteur> promoteurRepository)
+    public PromoteurService(IGenericRepository<Promoteur> promoteurRepository, IAuthService authService)
     {
         _promoteurRepository = promoteurRepository;
+        _authService = authService;
     }
 
     public async Task<PromoteurDto> CreerAsync(CreatePromoteurDto dto)
@@ -20,8 +22,9 @@ public class PromoteurService : IPromoteurService
             Nom = dto.Nom,
             Telephone = dto.Telephone,
             Email = dto.Email,
-            // TODO étape 8 : remplacer par un vrai hash (BCrypt) lors de la mise en place de l'authentification
-            MotDePasseHash = dto.MotDePasse
+            // hash (BCrypt) lors de la mise en place de l'authentification
+            MotDePasseHash = _authService.HashMotDePasse(dto.MotDePasse)
+
         };
 
         await _promoteurRepository.AddAsync(promoteur);
