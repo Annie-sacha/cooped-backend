@@ -20,7 +20,15 @@ var connectionString = builder.Configuration.GetConnectionString("CoopedDb");   
 builder.Services.AddDbContext<CoopedDbContext>(options =>
     options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));   // indique que la base zst mySql
 
-builder.Services.AddControllers();
+
+builder.Services.AddControllers()   // Ça convertit tous les enums de l'API en texte (Role, TypePret, StatutPret, TypeTontine, etc.) —
+                                    //  plus lisible partout, pas juste pour le rôle.
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.Converters.Add(new System.Text.Json.Serialization.JsonStringEnumConverter());
+    });
+
+
 builder.Services.AddEndpointsApiExplorer();
 //builder.Services.AddSwaggerGen();
 
