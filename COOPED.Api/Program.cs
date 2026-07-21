@@ -102,6 +102,17 @@ builder.Services.AddAuthentication(options =>
 builder.Services.AddAuthorization();
 
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("FrontendPolicy", policy =>
+    {
+        policy.AllowAnyOrigin()
+              .AllowAnyMethod()
+              .AllowAnyHeader();
+    });
+});
+
+
 var app = builder.Build();     // constructeur de l'application 
 
 if (app.Environment.IsDevelopment())
@@ -109,7 +120,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
+app.UseCors("FrontendPolicy");
 app.UseHttpsRedirection();  // force à utiliser https
 app.UseAuthentication();
 app.UseAuthorization();   //Active le système d'autorisation.

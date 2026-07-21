@@ -396,8 +396,13 @@ foreach (var fichier in fichiers)
             {
                 try
                 {
-                    // On ne saute plus le groupe si la mise est vide/0 : on la garde telle quelle (0 si vraiment absente).
-                    decimal mise = groupeTontine.Key.Mise ?? 0;
+                    decimal? miseNullable = groupeTontine.Key.Mise;
+                    if (miseNullable is null || miseNullable <= 0)
+                    {
+                        ignorees += groupeTontine.Count();
+                        continue;
+                    }
+                    decimal mise = miseNullable.Value;
 
                     // On trie d'abord les lignes qui ont une date, puis on met les lignes sans date à la fin
                     // (dans l'ordre où elles apparaissent) pour ne pas fausser l'ordre chronologique.
@@ -468,10 +473,10 @@ foreach (var fichier in fichiers)
 }
 
 Console.WriteLine("\n✅ Migration terminée :");
-Console.WriteLine($"   {clientsCrees} client(s) créé(s)");
-Console.WriteLine($"   {tontinesCreees} tontine(s) créée(s)");
-Console.WriteLine($"   {cotisationsCreees} cotisation(s) créée(s)");
-Console.WriteLine($"   {ignorees} ligne(s) ignorée(s) (ni nom ni prénom de client)");
+Console.WriteLine($"   {clientsCrees} clients créés");
+Console.WriteLine($"   {tontinesCreees} tontines créées");
+Console.WriteLine($"   {cotisationsCreees} cotisations créées");
+Console.WriteLine($"   {ignorees} lignes ignorées");
 
 if (fichiersIgnores.Count > 0)
 {
