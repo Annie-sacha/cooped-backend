@@ -36,7 +36,8 @@ public class TontineService : ITontineService
             Numero = tontine.Numero,
             Mise = tontine.Mise,
             NbreMise = tontine.NbreMise,
-            DateCreation = tontine.DateCreation
+            DateCreation = tontine.DateCreation,
+            DateFin = tontine.DateFin   // ← celle-ci reste, elle est dans le DTO de retour, pas dans l'entité créée — c'est différent et correct
         };
     }
 
@@ -122,6 +123,21 @@ public class TontineService : ITontineService
             Cloturee = tontine.DateFin is not null,
             Cases = cases
         };
+    }
+
+
+    public async Task<List<TontineDto>> ObtenirParClientAsync(int clientId)
+    {
+        var tontines = await _tontineRepository.GetByClientIdAsync(clientId);
+        return tontines.Select(t => new TontineDto
+        {
+            Numero = t.Numero,
+            Mise = t.Mise,
+            NbreMise = t.NbreMise,
+            DateCreation = t.DateCreation,
+            DateFin = t.DateFin
+
+        }).ToList();
     }
 
 

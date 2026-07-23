@@ -52,4 +52,13 @@ public class TontinesController : ControllerBase
             return NotFound(new { message = ex.Message });
         }
     }
+
+
+    [HttpGet("client/{clientId}")]
+    public async Task<IActionResult> ObtenirParClient(int clientId)
+    {
+        return Ok(await _tontineService.ObtenirParClientAsync(clientId));
+    }
+
+
 }

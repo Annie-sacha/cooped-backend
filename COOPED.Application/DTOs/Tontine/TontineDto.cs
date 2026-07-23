@@ -6,4 +6,5 @@ public class TontineDto
     public decimal Mise { get; set; }
     public int NbreMise { get; set; }
     public DateOnly DateCreation { get; set; }
+    public DateOnly? DateFin { get; set; }
 }
